@@ -1,0 +1,6 @@
+{
+  "name": "Visit Tuzla - Travel Guide",
+  "description": "A comprehensive guide to travel agencies, tours, and attractions in Tuzla, Bosnia and Herzegovina.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": []
+}
