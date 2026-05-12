@@ -4,18 +4,18 @@
  */
 
 import { useState, useEffect } from 'react';
-import {
-  MapPin,
-  Clock,
-  Phone,
-  Globe,
-  Train,
-  Calendar,
-  Map,
-  Info,
-  Compass,
-  Camera,
-  Coffee,
+import { 
+  MapPin, 
+  Clock, 
+  Phone, 
+  Globe, 
+  Train, 
+  Calendar, 
+  Map, 
+  Info, 
+  Compass, 
+  Camera, 
+  Coffee, 
   ShoppingBag,
   ArrowRight,
   Menu,
@@ -34,19 +34,8 @@ import {
   ScanLine
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 import { Agency } from '@/vite.config';
-import { supabase } from '../supabase';
-
-
-// Image imports — Vite requires ES module imports for assets in src/
-import imgKraljTvrtko from './assets/images/KraljTvrko13.webp';
-import imgTrain from './assets/images/regenerated_image_1778513665739.jpg';
-import imgJezero from './assets/images/jezero.webp';
-import imgSlanaBanja from './assets/images/tuzla25.webp';
-import imgSummer from './assets/images/regenerated_image_1778513666988.jpg';
-import imgQrCode01 from './assets/images/input_file_01.png';
-import imgQrCode2 from './assets/images/input_file_2.png';
-import imgRouteMap from './assets/images/put_vozic.jpg';
 
 // --- Data Structures ---
 
@@ -64,33 +53,33 @@ const poiData: Record<string, POI> = {
     id: "poi_tvrtko",
     title: "King Tvrtko I Kotromanić",
     description: "The first Bosnian King (1377–1391) and the most significant ruler of medieval Bosnia. He is a symbol of pride for Tuzla, where his monument stands over Freedom Square, looking towards the salt lakes he once protected.",
-    image: imgKraljTvrtko,
+    image: "/src/assets/images/KraljTvrko13.webp",
     funFact: "Under King Tvrtko, the salt riches of Tuzla were so vast that they funded the expansion of the Bosnian Kingdom into one of the most powerful states in the Balkans.",
-    qrCode: imgQrCode01
+    qrCode: "/src/assets/images/input_file_01.png"
   },
   "poi_train": {
     id: "poi_train",
     title: "The Tourist Train",
     description: "This charming train connects the historic Freedom Square with the Pannonian Lakes. It's not just transport; it's a moving viewpoint of Tuzla's urban soul and heritage.",
-    image: imgTrain,
+    image: "/src/assets/images/regenerated_image_1778513665739.jpg",
     funFact: "It's a favorite among local children who call it simply 'Vozić' (The Little Train).",
-    qrCode: imgQrCode01
+    qrCode: "/src/assets/images/input_file_01.png"
   },
   "poi_panonika": {
     id: "poi_panonika",
     title: "Pannonian Salt Lakes",
     description: "The only salt lakes in Europe that are located in the center of a city. These artificial lakes contain real salt water, mimicking the minerals of the Pannonian Sea that existed millions of years ago.",
-    image: imgJezero,
+    image: "/src/assets/images/jezero.webp",
     funFact: "Thousands of liters of water are filtered daily to maintain its perfect crystal-clear salinity.",
-    qrCode: imgQrCode2
+    qrCode: "/src/assets/images/input_file_2.png"
   },
   "poi_slana_banja": {
     id: "poi_slana_banja",
     title: "Slana Banja Park",
     description: "One of the most beautiful memorial complexes in Bosnia. It features paths for walking, monuments dedicated to modern history, and stunning views over the salt lakes.",
-    image: imgSlanaBanja,
+    image: "/src/assets/images/tuzla25.webp",
     funFact: "The park is nicknamed the 'Lungs of the City' due to its dense greenery and fresh air directly above the lake complex.",
-    qrCode: imgQrCode2
+    qrCode: "/src/assets/images/input_file_2.png"
   },
 };
 
@@ -242,7 +231,7 @@ const events = [
     location: "City Center & Panonika",
     description: "A season-long festival featuring open-air concerts, street performances, and sports tournaments.",
     category: "Festival",
-    image: imgSummer
+    image: "/src/assets/images/regenerated_image_1778513666988.jpg"
   },
   {
     title: "Tuzla Film Festival",
@@ -260,7 +249,7 @@ const events = [
     location: "Art Center 'Sloboda'",
     description: "Annual blues festival attracting international artists and music lovers.",
     category: "Music",
-    image: imgTrain
+    image: "/src/assets/images/regenerated_image_1778513665739.jpg"
   },
   {
     title: "Kaleidoskop Festival",
@@ -275,10 +264,11 @@ const events = [
 
 // --- Components ---
 
+
 function AgencyCard(props: { agency: Agency, key?: any }) {
   const { agency } = props;
   return (
-    <motion.div
+    <motion.div 
       layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -294,7 +284,7 @@ function AgencyCard(props: { agency: Agency, key?: any }) {
             </span>
           )}
         </div>
-
+        
         <p className="text-slate-500 text-sm mb-6 leading-relaxed">
           {agency.description}
         </p>
@@ -321,11 +311,11 @@ function AgencyCard(props: { agency: Agency, key?: any }) {
           </div>
         </div>
       </div>
-
+      
       <div className="p-4 bg-slate-50 border-t border-slate-100 mt-auto">
-        <a
-          href={agency.website}
-          target="_blank"
+        <a 
+          href={agency.website} 
+          target="_blank" 
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:border-sky-200 transition-colors"
         >
@@ -371,13 +361,13 @@ function EventCard(props: { event: any, key?: any }) {
       borderColor = "border-emerald-100";
       break;
   }
-
+  
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col sm:flex-row group h-full">
       <div className="sm:w-32 h-32 sm:h-auto relative overflow-hidden shrink-0">
-        <img
-          src={event.image}
-          alt={event.title}
+        <img 
+          src={event.image} 
+          alt={event.title} 
           className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           referrerPolicy="no-referrer"
         />
@@ -443,34 +433,18 @@ function ItineraryDay(props: { data: any, isLong?: boolean, key?: any }) {
 
 function QRScanner({ onScan, onClose, onShowPassport }: { onScan: (decodedText: string) => void, onClose: () => void, onShowPassport: () => void }) {
   useEffect(() => {
-    let scanner: import('html5-qrcode').Html5QrcodeScanner | null = null;
-    let isMounted = true;
+    const scanner = new Html5QrcodeScanner(
+      "reader",
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      /* verbose= */ false
+    );
 
-    const loadScanner = async () => {
-      const { Html5QrcodeScanner } = await import('html5-qrcode');
-
-      if (!isMounted) {
-        return;
-      }
-
-      scanner = new Html5QrcodeScanner(
-        'reader',
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        false,
-      );
-
-      scanner.render(onScan, () => {
-        // Quietly ignore scan errors.
-      });
-    };
-
-    loadScanner().catch((error) => {
-      console.error('Failed to load scanner', error);
+    scanner.render(onScan, (error) => {
+      // Quietly ignore scan errors
     });
 
     return () => {
-      isMounted = false;
-      scanner?.clear().catch((error) => console.error('Failed to clear scanner', error));
+      scanner.clear().catch(error => console.error("Failed to clear scanner", error));
     };
   }, [onScan]);
 
@@ -491,7 +465,7 @@ function QRScanner({ onScan, onClose, onShowPassport }: { onScan: (decodedText: 
           <p className="text-center text-sm text-slate-500">
             Point your camera at a QR code located near city monuments.
           </p>
-          <button
+          <button 
             onClick={onShowPassport}
             className="flex items-center gap-2 text-sky-600 font-bold text-sm hover:text-sky-700 transition-colors"
           >
@@ -509,7 +483,7 @@ function DigitalPassport({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-md">
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-white w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
@@ -523,7 +497,7 @@ function DigitalPassport({ onClose }: { onClose: () => void }) {
             <X className="w-6 h-6 text-slate-500" />
           </button>
         </div>
-
+        
         <div className="p-8 overflow-y-auto grid sm:grid-cols-2 gap-8">
           {poisWithCodes.map(poi => (
             <div key={poi.id} className="flex flex-col items-center gap-4 p-6 bg-slate-50 rounded-3xl border border-slate-100 group">
@@ -542,7 +516,7 @@ function DigitalPassport({ onClose }: { onClose: () => void }) {
             </div>
           )}
         </div>
-
+        
         <div className="p-8 bg-slate-50/50 border-t border-slate-100 text-center">
           <p className="text-sm text-slate-500 max-w-md mx-auto">
             These codes are physically located at our monuments. Use them to collect your digital visit stamps!
@@ -558,32 +532,32 @@ function POIModal({ poi, onClose }: { poi: POI, onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md">
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="bg-white w-full max-w-xl rounded-[2.5rem] overflow-hidden shadow-2xl"
       >
         <div className="relative h-64">
-          <img
-            src={poi.image}
-            alt={poi.title}
+          <img 
+            src={poi.image} 
+            alt={poi.title} 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-          <button
+          <button 
             onClick={onClose}
             className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-md hover:bg-white/30 rounded-full transition-all text-white"
           >
             <X className="w-5 h-5" />
           </button>
           <div className="absolute bottom-6 left-8 flex items-center gap-3">
-            <div className="w-12 h-12 bg-sky-500 rounded-2xl flex items-center justify-center shadow-lg">
-              <Info className="text-white w-6 h-6" />
-            </div>
-            <h3 className="text-3xl font-bold font-serif italic text-white tracking-tight">{poi.title}</h3>
+             <div className="w-12 h-12 bg-sky-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <Info className="text-white w-6 h-6" />
+             </div>
+             <h3 className="text-3xl font-bold font-serif italic text-white tracking-tight">{poi.title}</h3>
           </div>
           {poi.qrCode && (
-            <button
+            <button 
               onClick={() => setShowQR(!showQR)}
               className="absolute bottom-6 right-8 p-3 bg-white text-sky-600 rounded-xl shadow-lg border border-sky-100 hover:bg-sky-50 transition-all font-bold text-xs flex items-center gap-2"
             >
@@ -595,7 +569,7 @@ function POIModal({ poi, onClose }: { poi: POI, onClose: () => void }) {
         <div className="p-8 relative">
           <AnimatePresence>
             {showQR && poi.qrCode && (
-              <motion.div
+              <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -606,7 +580,7 @@ function POIModal({ poi, onClose }: { poi: POI, onClose: () => void }) {
                 </div>
                 <h4 className="text-xl font-bold text-slate-900 mb-2">Monument QR Code</h4>
                 <p className="text-slate-500 text-sm mb-6">Found near the physical location of {poi.title}</p>
-                <button
+                <button 
                   onClick={() => setShowQR(false)}
                   className="px-6 py-2 bg-slate-900 text-white rounded-xl font-bold text-sm"
                 >
@@ -619,7 +593,7 @@ function POIModal({ poi, onClose }: { poi: POI, onClose: () => void }) {
           <p className="text-slate-600 leading-relaxed mb-8 text-lg font-medium">
             {poi.description}
           </p>
-
+          
           <div className="bg-sky-50 p-6 rounded-2xl border border-sky-100 relative overflow-hidden group">
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-sky-200/40 rounded-full blur-2xl transition-transform group-hover:scale-150" />
             <div className="relative z-10">
@@ -632,8 +606,8 @@ function POIModal({ poi, onClose }: { poi: POI, onClose: () => void }) {
               </p>
             </div>
           </div>
-
-          <button
+          
+          <button 
             onClick={onClose}
             className="w-full mt-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
           >
@@ -664,13 +638,13 @@ export default function App() {
     <div className="min-h-screen flex flex-col selection:bg-sky-100 selection:text-sky-900">
       <AnimatePresence>
         {isScannerOpen && (
-          <QRScanner
-            onScan={handleScan}
-            onClose={() => setIsScannerOpen(false)}
+          <QRScanner 
+            onScan={handleScan} 
+            onClose={() => setIsScannerOpen(false)} 
             onShowPassport={() => {
               setIsScannerOpen(false);
               setIsPassportOpen(true);
-            }}
+            }} 
           />
         )}
         {activePOI && <POIModal poi={activePOI} onClose={() => setActivePOI(null)} />}
@@ -686,11 +660,11 @@ export default function App() {
               </div>
               <span className="text-xl font-bold font-serif tracking-tight text-slate-900 italic">Visit Tuzla</span>
             </div>
-
+            
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-8">
               <a href="#agencies" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Agencies</a>
-              <button
+              <button 
                 onClick={() => setIsPassportOpen(true)}
                 className="text-sm font-medium text-sky-600 hover:text-sky-700 transition-colors flex items-center gap-1.5"
               >
@@ -704,7 +678,7 @@ export default function App() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button
+            <button 
               className="md:hidden p-2 text-slate-600"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -723,7 +697,7 @@ export default function App() {
               className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
             >
               <div className="px-4 py-6 space-y-4">
-                <button
+                <button 
                   onClick={() => {
                     setIsPassportOpen(true);
                     setIsMenuOpen(false);
@@ -749,7 +723,7 @@ export default function App() {
         <div className="absolute top-0 left-0 w-full h-full -z-10 bg-gradient-to-br from-sky-50 via-white to-sky-100 opacity-60" />
         <div className="absolute top-[20%] left-[10%] w-64 h-64 bg-sky-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
         <div className="absolute bottom-[10%] right-[10%] w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
-
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -760,15 +734,15 @@ export default function App() {
               Explore the City of Salt
             </span>
             <h1 className="text-5xl md:text-7xl font-bold font-serif text-slate-900 mb-8 leading-tight">
-              Tuzla: Salt, Soul & <br />
+              Tuzla: Salt, Soul & <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600 italic">Eternal Summer</span>
             </h1>
             <p className="max-w-2xl mx-auto text-lg text-slate-600 mb-10 leading-relaxed">
-              From the unique Pannonian salt lakes to medieval fortresses in the hills,
+              From the unique Pannonian salt lakes to medieval fortresses in the hills, 
               discover the heart of one of Bosnia & Herzegovina's most vibrant regions.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button
+              <button 
                 onClick={() => setIsScannerOpen(true)}
                 className="w-full sm:w-auto px-8 py-4 bg-sky-500 text-white rounded-xl font-bold hover:bg-sky-600 shadow-lg shadow-sky-200 transition-all flex items-center justify-center gap-2 group border-b-4 border-sky-700 active:border-b-0 active:translate-y-1"
               >
@@ -839,7 +813,7 @@ export default function App() {
 
           <div className="grid md:grid-cols-3 gap-8 text-left">
             {Object.values(poiData).map((poi) => (
-              <motion.div
+              <motion.div 
                 key={poi.id}
                 whileHover={{ y: -10 }}
                 onClick={() => setActivePOI(poi)}
@@ -906,19 +880,20 @@ export default function App() {
             </div>
             <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8 group">
               <div className="relative group">
-                <img
-                  src={imgTrain}
-                  alt="Turistički vozić"
+                <img 
+                  src="https://images.unsplash.com/photo-1474487022132-581d8bf2f36b?auto=format&fit=crop&q=80&w=600" 
+                  alt="Turistički vozić" 
                   className="w-48 h-32 object-cover rounded-2xl shadow-2xl border border-white/10 group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20" />
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold font-serif italic leading-tight">The Tourist Train <br /><span className="text-sky-400 font-sans tracking-tight">(Turistički vozić)</span></h2>
+              <h2 className="text-4xl md:text-5xl font-bold font-serif italic leading-tight">The Tourist Train <br/><span className="text-sky-400 font-sans tracking-tight">(Turistički vozić)</span></h2>
             </div>
             <p className="text-slate-400 mb-10 text-lg leading-relaxed">
               Managed by "Traffic and Communications" Tuzla, this charming "small bus-train" is the best way to shuttle between the historic square and the lake complex while seeing city monuments.
             </p>
-
+            
             <div className="grid sm:grid-cols-2 gap-8 mb-10">
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
@@ -990,14 +965,28 @@ export default function App() {
               </p>
             </div>
           </motion.div>
-
+          
           <div className="relative group">
-            <div className="rounded-3xl overflow-hidden relative border border-white/10 shadow-2xl bg-white">
-              <img
-                src={imgRouteMap}
-                alt="Tourist Train Route Map"
-                className="w-full h-auto object-contain"
+            <div className="aspect-square rounded-3xl overflow-hidden relative border border-white/10 shadow-2xl">
+              {/* Map Background Image */}
+              <img 
+                src="/src/assets/images/put_vozic_map.jpg" 
+                alt="Tour Path Map" 
+                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
+                referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-transparent to-transparent" />
+              
+              <div className="relative h-full flex items-center justify-center p-4 backdrop-blur-[1px]">
+                <div className="w-full h-full bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+                  <img 
+                    src="/src/assets/images/tuzla12.webp" 
+                    alt="Train Timetable" 
+                    className="w-full h-full object-contain"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
             </div>
             {/* Decorative dots */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-sky-500/20 rounded-full blur-xl animate-pulse" />
@@ -1017,13 +1006,13 @@ export default function App() {
 
           <div className="flex flex-col items-center mb-12">
             <div className="flex bg-white p-1 rounded-xl shadow-sm border border-slate-200">
-              <button
+              <button 
                 onClick={() => setActiveItinerary('3')}
                 className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeItinerary === '3' ? 'bg-sky-500 text-white' : 'text-slate-500 hover:text-slate-800'}`}
               >
                 3-Day "Salt & Soul"
               </button>
-              <button
+              <button 
                 onClick={() => setActiveItinerary('7')}
                 className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeItinerary === '7' ? 'bg-sky-500 text-white' : 'text-slate-500 hover:text-slate-800'}`}
               >
@@ -1035,7 +1024,7 @@ export default function App() {
           <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100">
             <AnimatePresence mode="wait">
               {activeItinerary === '3' ? (
-                <motion.div
+                <motion.div 
                   key="3"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -1052,7 +1041,7 @@ export default function App() {
                   </div>
                 </motion.div>
               ) : (
-                <motion.div
+                <motion.div 
                   key="7"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -1073,7 +1062,7 @@ export default function App() {
           </div>
         </div>
       </section>
-
+      
       {/* Event Calendar Section */}
       <section id="events" className="py-24 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1089,7 +1078,7 @@ export default function App() {
               <EventCard key={i} event={event} />
             ))}
           </div>
-
+          
           <div className="mt-12 text-center text-slate-400 text-sm italic">
             Check the <a href="https://tuzla-tour-guide.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sky-500 underline">Visit Tuzla PWA</a> for real-time events, interactive maps, and your virtual tour guide.
           </div>
@@ -1102,13 +1091,13 @@ export default function App() {
           <div className="bg-sky-600 rounded-[3rem] p-10 md:p-20 text-white flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
             {/* Decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-
+            
             <div className="flex-1 text-center md:text-left relative z-10">
-              <h2 className="text-4xl md:text-5xl font-bold font-serif mb-6 italic tracking-tight">Need a Local <br /> Storyteller?</h2>
+              <h2 className="text-4xl md:text-5xl font-bold font-serif mb-6 italic tracking-tight">Need a Local <br/> Storyteller?</h2>
               <p className="text-sky-100 text-lg mb-10 leading-relaxed opacity-90">
                 To hire a private certified tour guide or get official tourism brochures, contact the Tourist Information Center located in the city hub.
               </p>
-
+              
               <div className="space-y-6 max-w-md mx-auto md:mx-0">
                 <div className="flex items-center gap-4 group">
                   <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur shadow-sm flex items-center justify-center shrink-0 group-hover:bg-white/30 transition-colors">
