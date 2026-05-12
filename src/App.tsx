@@ -36,6 +36,16 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { Agency } from '@/vite.config';
 
+// Image imports — Vite requires ES module imports for assets in src/
+import imgKraljTvrtko from './assets/images/KraljTvrko13.webp';
+import imgTrain from './assets/images/regenerated_image_1778513665739.jpg';
+import imgJezero from './assets/images/jezero.webp';
+import imgSlanaBanja from './assets/images/tuzla25.webp';
+import imgSummer from './assets/images/regenerated_image_1778513666988.jpg';
+import imgQrCode01 from './assets/images/input_file_01.png';
+import imgQrCode2 from './assets/images/input_file_2.png';
+import imgRouteMap from './assets/images/put_vozic.jpg';
+
 // --- Data Structures ---
 
 interface POI {
@@ -52,33 +62,33 @@ const poiData: Record<string, POI> = {
     id: "poi_tvrtko",
     title: "King Tvrtko I Kotromanić",
     description: "The first Bosnian King (1377–1391) and the most significant ruler of medieval Bosnia. He is a symbol of pride for Tuzla, where his monument stands over Freedom Square, looking towards the salt lakes he once protected.",
-    image: "src/assets/images/KraljTvrko13.webp",
+    image: imgKraljTvrtko,
     funFact: "Under King Tvrtko, the salt riches of Tuzla were so vast that they funded the expansion of the Bosnian Kingdom into one of the most powerful states in the Balkans.",
-    qrCode: "input_file_0.png"
+    qrCode: imgQrCode01
   },
   "poi_train": {
     id: "poi_train",
     title: "The Tourist Train",
     description: "This charming train connects the historic Freedom Square with the Pannonian Lakes. It's not just transport; it's a moving viewpoint of Tuzla's urban soul and heritage.",
-    image: "\src\assets\images\regenerated_image_1778513665739.jpg",
+    image: imgTrain,
     funFact: "It's a favorite among local children who call it simply 'Vozić' (The Little Train).",
-    qrCode: "/src/assets/images/input_file_01.png"
+    qrCode: imgQrCode01
   },
   "poi_panonika": {
     id: "poi_panonika",
     title: "Pannonian Salt Lakes",
     description: "The only salt lakes in Europe that are located in the center of a city. These artificial lakes contain real salt water, mimicking the minerals of the Pannonian Sea that existed millions of years ago.",
-    image: "src\assets\images\jezero.webp",
+    image: imgJezero,
     funFact: "Thousands of liters of water are filtered daily to maintain its perfect crystal-clear salinity.",
-    qrCode: "input_file_1.png"
+    qrCode: imgQrCode2
   },
   "poi_slana_banja": {
     id: "poi_slana_banja",
     title: "Slana Banja Park",
     description: "One of the most beautiful memorial complexes in Bosnia. It features paths for walking, monuments dedicated to modern history, and stunning views over the salt lakes.",
-    image: "src\assets\images\tuzla25.webp",
+    image: imgSlanaBanja,
     funFact: "The park is nicknamed the 'Lungs of the City' due to its dense greenery and fresh air directly above the lake complex.",
-    qrCode: "/src/assets/images/input_file_2.png"
+    qrCode: imgQrCode2
   },
 };
 
@@ -230,7 +240,7 @@ const events = [
     location: "City Center & Panonika",
     description: "A season-long festival featuring open-air concerts, street performances, and sports tournaments.",
     category: "Festival",
-    image: "/src/assets/images/regenerated_image_1778513666988.jpg"
+    image: imgSummer
   },
   {
     title: "Tuzla Film Festival",
@@ -248,7 +258,7 @@ const events = [
     location: "Art Center 'Sloboda'",
     description: "Annual blues festival attracting international artists and music lovers.",
     category: "Music",
-    image: "/src/assets/images/regenerated_image_1778513665739.jpg"
+    image: imgTrain
   },
   {
     title: "Kaleidoskop Festival",
@@ -431,7 +441,7 @@ function ItineraryDay(props: { data: any, isLong?: boolean, key?: any }) {
 
 function QRScanner({ onScan, onClose, onShowPassport }: { onScan: (decodedText: string) => void, onClose: () => void, onShowPassport: () => void }) {
   useEffect(() => {
-    let scanner: { clear: () => Promise<void> } | null = null;
+    let scanner: import('html5-qrcode').Html5QrcodeScanner | null = null;
     let isMounted = true;
 
     const loadScanner = async () => {
@@ -895,10 +905,9 @@ export default function App() {
             <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8 group">
               <div className="relative group">
                 <img 
-                  src="https://images.unsplash.com/photo-1474487022132-581d8bf2f36b?auto=format&fit=crop&q=80&w=600" 
+                  src={imgTrain} 
                   alt="Turistički vozić" 
                   className="w-48 h-32 object-cover rounded-2xl shadow-2xl border border-white/10 group-hover:scale-105 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20" />
               </div>
@@ -981,26 +990,12 @@ export default function App() {
           </motion.div>
           
           <div className="relative group">
-            <div className="aspect-square rounded-3xl overflow-hidden relative border border-white/10 shadow-2xl">
-              {/* Map Background Image */}
+            <div className="rounded-3xl overflow-hidden relative border border-white/10 shadow-2xl bg-white">
               <img 
-                src="Put vozic.jpg" 
-                alt="Tour Path Map" 
-                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
-                referrerPolicy="no-referrer"
+                src={imgRouteMap} 
+                alt="Tourist Train Route Map" 
+                className="w-full h-auto object-contain"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-transparent to-transparent" />
-              
-              <div className="relative h-full flex items-center justify-center p-4 backdrop-blur-[1px]">
-                <div className="w-full h-full bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl border border-white/20">
-                  <img 
-                    src="red.png" 
-                    alt="Train Timetable" 
-                    className="w-full h-full object-contain"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-              </div>
             </div>
             {/* Decorative dots */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-sky-500/20 rounded-full blur-xl animate-pulse" />
